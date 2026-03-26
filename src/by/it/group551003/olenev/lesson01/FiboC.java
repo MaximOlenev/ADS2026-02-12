@@ -14,7 +14,7 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        int n = 55555;
+        long n = 55555;
         int m = 1000;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
@@ -23,33 +23,31 @@ public class FiboC {
         return System.currentTimeMillis() - startTime;
     }
 
-    long fasterC(long n, int m) {
-        ArrayList<Integer> period = findPisanoPeriod(m);
-        return period.get((int) (n % period.size()));
-    }
-
     public static ArrayList<Integer> findPisanoPeriod(int m) {
         ArrayList<Integer> seq = new ArrayList<>();
-        int prev = 0;
-        int curr = 1;
+        int prevNum = 0;
+        int currNum = 1;
         seq.add(0);
-        if (m == 1) { return seq; }
+        if (m == 1) {
+            return seq;
+        }
         seq.add(1);
         for (int i = 2; i <= m * 6 + 2; ++i) {
-            int next = (prev + curr) % m;
+            int next = (prevNum + currNum) % m;
             seq.add(next);
-            prev = curr;
-            curr = next;
-            if (prev == 0 && curr == 1 && seq.size() > 2) {
+            prevNum = currNum;
+            currNum = next;
+            if (prevNum == 0 && currNum == 1 && seq.size() > 2) {
                 seq.removeLast();
                 seq.remove(seq.size() - 2);
                 return seq;
             }
         }
         return seq;
-
     }
 
-
+    long fasterC(long n, int m) {
+        ArrayList<Integer> period = findPisanoPeriod(m);
+        return period.get((int) (n % period.size()));
+    }
 }
-
