@@ -1,6 +1,5 @@
 package by.it.group551003.olenev.lesson03;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,14 +7,14 @@ import java.util.Scanner;
 
 public class B_Huffman {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         InputStream inputStream = B_Huffman.class.getResourceAsStream("dataB.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(inputStream);
         System.out.println(result);
     }
 
-    String decode(InputStream inputStream) throws FileNotFoundException {
+    String decode(InputStream inputStream) {
         StringBuilder result = new StringBuilder();
         Scanner scanner = new Scanner(inputStream);
 
@@ -25,8 +24,13 @@ public class B_Huffman {
 
         Map<String, Character> codeToChar = new HashMap<>();
         for (int i = 0; i < count; i++) {
-            String line = scanner.nextLine();
-            String[] parts = line.split(": ");
+            String line;
+
+            do {
+                line = scanner.nextLine().trim();
+            } while (line.isEmpty());
+
+            String[] parts = line.split(":\\s*");
             char letter = parts[0].charAt(0);
             String code = parts[1];
             codeToChar.put(code, letter);
@@ -43,6 +47,7 @@ public class B_Huffman {
                 currentCode.setLength(0);
             }
         }
+        scanner.close();
         return result.toString();
     }
 }

@@ -25,21 +25,21 @@ public class A_Huffman {
         Scanner scanner = new Scanner(inputStream);
         String s = scanner.next();
 
-        codes.clear();                      // очищаем статическую карту перед использованием
+        codes.clear();
 
-        // 1. подсчёт частот символов
+
         Map<Character, Integer> count = new HashMap<>();
         for (char c : s.toCharArray()) {
             count.put(c, count.getOrDefault(c, 0) + 1);
         }
 
-        // 2. создание листьев и помещение их в приоритетную очередь
+
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
         for (Map.Entry<Character, Integer> entry : count.entrySet()) {
             priorityQueue.add(new LeafNode(entry.getValue(), entry.getKey()));
         }
 
-        // особый случай: строка состоит из одного повторяющегося символа
+
         if (priorityQueue.size() == 1) {
             LeafNode leaf = (LeafNode) priorityQueue.poll();
             codes.put(leaf.symbol, "0");
@@ -50,7 +50,7 @@ public class A_Huffman {
             return sb.toString();
         }
 
-        // 3. построение дерева Хаффмана
+
         while (priorityQueue.size() > 1) {
             Node left = priorityQueue.poll();
             Node right = priorityQueue.poll();
@@ -58,11 +58,11 @@ public class A_Huffman {
             priorityQueue.add(parent);
         }
 
-        // 4. корень дерева – последний оставшийся элемент
-        Node root = priorityQueue.poll();
-        root.fillCodes("");                // рекурсивно заполняет карту codes
 
-        // 5. кодирование исходной строки
+        Node root = priorityQueue.poll();
+        root.fillCodes("");
+
+
         StringBuilder sb = new StringBuilder();
         for (char c : s.toCharArray()) {
             sb.append(codes.get(c));
