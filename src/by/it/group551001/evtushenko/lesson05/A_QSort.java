@@ -78,22 +78,22 @@ public class A_QSort {
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
         Pair[] combined = new Pair[segments.length * 2 + points.length];
-        
-        for(int i = 0; i < points.length; ++i) combined[i] = new Pair(points[i], 0, i);
-        for(int i = 0; i < segments.length; ++i){
+
+        for (int i = 0; i < points.length; ++i) combined[i] = new Pair(points[i], 0, i);
+        for (int i = 0; i < segments.length; ++i) {
             combined[points.length + i] = new Pair(segments[i].start, -1, 0);
             combined[combined.length - i - 1] = new Pair(segments[i].stop, 1, 0);
         }
 
         qSort(combined, 0, combined.length - 1);
 
-        for(int i = 0, j = 0, c = 0; i < points.length; ++j){
-            if(combined[j].b == -1){
+        for (int i = 0, j = 0, c = 0; i < points.length; ++j) {
+            if (combined[j].b == -1) {
                 ++c;
                 continue;
             }
 
-            if(combined[j].b == 1){
+            if (combined[j].b == 1) {
                 --c;
                 continue;
             }
@@ -138,23 +138,23 @@ public class A_QSort {
 
         @Override
         public int compareTo(Pair o) {
-            if(a == o.a) return Integer.compare(b, o.b);
+            if (a == o.a) return Integer.compare(b, o.b);
 
             return Integer.compare(a, o.a);
         }
     }
 
-    <T extends Comparable<T>> void qSort(T[] a, int b, int e){
+    <T extends Comparable<T>> void qSort(T[] a, int b, int e) {
         T m = a[(b + e) / 2];
 
         int i = b, j = e;
-        while(i <= j){
-            while(a[i].compareTo(m) < 0)
+        while (i <= j) {
+            while (a[i].compareTo(m) < 0)
                 ++i;
-            while(a[j].compareTo(m) > 0)
+            while (a[j].compareTo(m) > 0)
                 --j;
 
-            if(i <= j) {
+            if (i <= j) {
                 T t = a[i];
                 a[i] = a[j];
                 a[j] = t;
@@ -163,8 +163,8 @@ public class A_QSort {
             }
         }
 
-        if(b < j) qSort(a, b, j);
-        if(i < e) qSort(a, i, e);
+        if (b < j) qSort(a, b, j);
+        if (i < e) qSort(a, i, e);
     }
 
 }
